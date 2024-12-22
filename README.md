@@ -1,0 +1,2 @@
+# Asteroids
+The classic Asteroids arcade game written in Go and built with the [Ebitengine](https://github.com/hajimehoshi/ebiten) game framework. It uses an ECS design pattern with the [donburi](https://github.com/yohamta/donburi) library for handling the ECS implementation. A lot of inspiration for creating a game with ECS was taken from the very useful [airplanes](https://github.com/m110/airplanes) game by m110. I'm putting the code for my Asteroids game for anyone else looking to create an ebitengine game using ECS that needs an example to reference. 

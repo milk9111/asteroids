@@ -19,6 +19,8 @@ func NewWave() *Wave {
 	return &Wave{}
 }
 
+// Update will trigger a new wave to spawn. Each wave it will spawn '4 + (wave number - 1)' large asteroids.
+// The asteroids are spawned with a random direction, speed, and rotation on a random edge of the screen.
 func (w *Wave) Update(world donburi.World) {
 	if w.game == nil {
 		w.game = component.MustFindGame(world)
@@ -63,6 +65,8 @@ func (w *Wave) Update(world donburi.World) {
 
 			pos := dmath.NewVec2(x, y)
 
+			// direction param is there to get a random direction within 20 degrees of the position.
+			// it's the dmath.Vec2 equivalent of the engine.RandomRangeInt function.
 			return archetype.NewAsteroid(
 				world,
 				pos,

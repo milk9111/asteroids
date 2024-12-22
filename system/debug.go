@@ -49,6 +49,8 @@ func NewDebug(w, h int, nextStepCallback func(), pauseGameCallback func()) *Debu
 	}
 }
 
+// Update will handle pausing/unpausing and stepping through ticks while paused. It will also handle
+// selecting a collider for detailed debugging when the mouse is hovering over and clicks and entity.
 func (d *Debug) Update(w donburi.World) {
 	if d.debug == nil {
 		d.debug = component.MustFindDebug(w)
@@ -99,6 +101,7 @@ func (d *Debug) Update(w donburi.World) {
 	})
 }
 
+// DebugDraw will draw the debug text to the screen.
 func (d *Debug) DebugDraw(w donburi.World, screen *ebiten.Image) {
 	if d.debug == nil || !d.debug.Enabled {
 		return
@@ -180,6 +183,7 @@ func (d *Debug) DebugDraw(w donburi.World, screen *ebiten.Image) {
 	screen.DrawImage(d.world, op)
 }
 
+// getDebugPrintAtsForEntry will get the list of strings and position for debug text that follows a given entity.
 func getDebugPrintAtsForEntry(entry *donburi.Entry) ([]string, dmath.Vec2) {
 	var sprite *component.SpriteData
 	if entry.HasComponent(component.Sprite) {

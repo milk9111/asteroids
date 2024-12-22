@@ -60,6 +60,11 @@ func (r *Render) Update(w donburi.World) {
 	}
 }
 
+// Draw will sort the sprites by component.SpriteLayer before drawing each one.
+// Since all sprites (except for the game over background) are vector strokes,
+// it calls Render.drawPathOps() to apply the sprite's path operations to the path
+// and append the results to the full list of vertices and indices. This is done to
+// do a single DrawTriangles call for each layer.
 func (r *Render) Draw(w donburi.World, screen *ebiten.Image) {
 	if r.camera == nil || r.game == nil {
 		return
@@ -151,6 +156,8 @@ func (r *Render) Draw(w donburi.World, screen *ebiten.Image) {
 	screen.DrawImage(r.world, &ebiten.DrawImageOptions{})
 }
 
+// drawPathOps applies a position, scale, and rotation to each path target while applying the path operations to the vector.Path.
+// It then appends the new stroke vertices and indices to the list in order to do a single large DrawTriangles call at the end of rendering.
 func (r *Render) drawPathOps(path *vector.Path, ops []path.Op, worldPos, scale, rotationPivot dmath.Vec2, rotation float64, vertices *[]ebiten.Vertex, indices *[]uint16) {
 	if len(ops) == 0 {
 		return

@@ -36,6 +36,8 @@ func NewHUD(restartGameCallback func()) *HUD {
 	}
 }
 
+// Update will convert the integer game score into a list of path operations for the Render system to
+// draw to the screen. This could be converted to a script that is triggered by a 'scored' or 'died' event.
 func (h *HUD) Update(w donburi.World) {
 	if h.game == nil {
 		h.game = component.MustFindGame(w)
@@ -67,6 +69,8 @@ func (h *HUD) Update(w donburi.World) {
 
 	var scoreTextPath []path.Op
 	var scoreSizeX float64
+	// if I ever do this vector.Path drawing again, I should move this loop into a dedicated 'text' or 'font' package
+	// since I've had to duplicate this exact loop a few times.
 	for i, r := range strconv.Itoa(h.game.Score) {
 		nextRunePoints, ok := archetype.FontSpritePoints[r]
 		if !ok {
@@ -92,6 +96,9 @@ func (h *HUD) Update(w donburi.World) {
 	component.Sprite.Get(e).PathOps = scoreTextPath
 }
 
+// calculateFontRuneSize determines the X, Y size for a given path operations slice. Characters like ' don't have the
+// normal width so using a constant width and height would end up putting extra space in the middle of a word where
+// it shouldn't be.
 func calculateFontRuneSize(fontRunePath []path.Op) dmath.Vec2 {
 	target := fontRunePath[0].Target()
 	minX, maxX, minY, maxY := target.X, target.X, target.Y, target.Y

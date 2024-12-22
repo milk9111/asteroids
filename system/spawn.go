@@ -18,6 +18,8 @@ func NewSpawn() *Spawn {
 	}
 }
 
+// Update will use the component.Spawn component's callback field to instantiate a new entity before
+// removing itself from the world.
 func (s *Spawn) Update(w donburi.World) {
 	s.query.Each(w, func(e *donburi.Entry) {
 		spawn := component.Spawn.Get(e)

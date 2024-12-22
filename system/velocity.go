@@ -22,6 +22,7 @@ func NewVelocity() *Velocity {
 	}
 }
 
+// Update applies the queued velocity and rotation (angular) velocity to the transform.
 func (v *Velocity) Update(world donburi.World) {
 	v.query.Each(world, func(entry *donburi.Entry) {
 		t := transform.Transform.Get(entry)

@@ -44,6 +44,9 @@ func NewInput() *Input {
 	}
 }
 
+// Update will check for various Player inputs in order to change the state of the game.
+// It handles rotating, moving forward, and shooting projectiles based on different key inputs.
+// The behavior of those inputs could be converted into a script triggered by those inputs as events.
 func (i *Input) Update(world donburi.World) {
 	inputEntry, ok := i.query.First(world)
 	if !ok {
@@ -99,6 +102,8 @@ func (i *Input) Update(world donburi.World) {
 		i.prevVelocity = v.Velocity()
 		i.toggleThruster(inputEntry, true)
 	} else if i.prevVelocity.Magnitude() > 0 {
+		// slows down the velocity over time. would be better to put this into a separate 'physics' system so it can be applied
+		// to other entities.
 		v.AddVelocity(i.prevVelocity.MulScalar(1 - timePerTick))
 		i.prevVelocity = v.Velocity()
 		i.toggleThruster(inputEntry, false)

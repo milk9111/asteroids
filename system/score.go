@@ -29,6 +29,9 @@ func NewScore() *Score {
 	}
 }
 
+// Update will empty the component.ScoreQueue to handle the logic of adding to the score
+// and increasing lives for each score interval reached. This is another system that could
+// be turned into a script triggered on a 'scored' event.
 func (s *Score) Update(w donburi.World) {
 	if s.game == nil {
 		s.game = component.MustFindGame(w)

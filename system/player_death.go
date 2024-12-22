@@ -38,6 +38,9 @@ func NewPlayerDeath() *PlayerDeath {
 	}
 }
 
+// Update will handle disabling the Player when a collision occurs. It also handles resetting the player
+// after the explosion timer is completed. This is another system that could be converted to a script
+// triggered by a 'collided' event.
 func (p *PlayerDeath) Update(w donburi.World) {
 	if p.game == nil {
 		p.game = component.MustFindGame(w)

@@ -20,11 +20,13 @@ func main() {
 	forceMonitorFlag := flag.Bool("q", false, "force game window to third monitor (for testing)")
 	flag.Parse()
 
+	// couldn't get the screen size to dynamically resize so decided to hardcode it here
 	config := game.Config{
 		ScreenWidth:  1024,
 		ScreenHeight: 768,
 	}
 
+	// setup has 3 monitors and this forces the game window to open up on the 3rd one
 	monitors := ebiten.AppendMonitors(nil)
 	if forceMonitorFlag != nil && *forceMonitorFlag && len(monitors) == 3 {
 		ebiten.SetMonitor(monitors[2])

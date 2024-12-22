@@ -23,6 +23,7 @@ func NewTTL() *TTL {
 	}
 }
 
+// Update adds the component.TagDestroy component to any entity that has reached the end of its TTL timer.
 func (t *TTL) Update(w donburi.World) {
 	t.query.Each(w, func(e *donburi.Entry) {
 		ttl := component.TTL.Get(e)
